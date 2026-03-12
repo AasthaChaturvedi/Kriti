@@ -18,6 +18,7 @@ const handleChange = (e) => {
 };
 
   const [tasks, setTasks] = useState([]);
+  const [filter, setFilter] = useState("all");
 
  
  useEffect(() => {
@@ -73,6 +74,11 @@ useEffect(() => {
         return "black";
     }
     };
+    const filteredTasks = tasks.filter(task => {
+      if (filter === "completed") return task.completed;
+      if (filter === "pending") return !task.completed;
+      return true;
+    });
 
   return (
     <div style={{ padding: "20px", maxWidth: "600px", margin: "auto" }}>
@@ -121,9 +127,14 @@ useEffect(() => {
       />
      
       <button onClick={addTask}>Add Task</button>
+        <div style={{ marginTop: "20px" }}>
+        <button onClick={() => setFilter("all")}>All</button>
+        <button onClick={() => setFilter("completed")}>Completed</button>
+        <button onClick={() => setFilter("pending")}>Pending</button>
+      </div>
 
       <ul style={{ listStyle: "none", padding: 0 }}>
-  {tasks.map((task, index) => (
+  {filteredTasks.map((task, index) => (
     <li
       key={index}
       style={{
