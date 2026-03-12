@@ -36,7 +36,7 @@ useEffect(() => {
 
   const addTask = () => {
 
-    const newTask = { ...form};
+    const newTask = { ...form, completed: false };
       
 
     setTasks([...tasks, newTask]);
@@ -55,6 +55,24 @@ useEffect(() => {
     const updatedTasks = tasks.filter((_, i) => i !== index);
     setTasks(updatedTasks);
   };
+  const toggleComplete = (index) => {
+    const updatedTasks = tasks.map((task, i) =>
+      i === index ? { ...task, completed: !task.completed } : task
+    );
+    setTasks(updatedTasks);
+  };
+  const getPriorityColor = (priority) => {
+    switch (priority.toLowerCase()) {
+      case "high":
+        return "red";
+      case "medium":
+        return "orange";
+      case "low":
+        return "green";
+      default:
+        return "black";
+    }
+    };
 
   return (
     <div style={{ padding: "20px", maxWidth: "600px", margin: "auto" }}>
@@ -76,8 +94,6 @@ useEffect(() => {
         name="duration"
         value={form.duration}
         onChange={handleChange}
-       
-
       />
 
       <input
@@ -118,11 +134,20 @@ useEffect(() => {
         background: "#f9f9f9"
       }}
     >
-      <h3>{task.subject}</h3>
+      <h3 style={{ textDecoration: task.completed ? "line-through" : "none" }}>
+  <input
+    type="checkbox"
+    checked={task.completed}
+    onChange={() => toggleComplete(index)}
+  />
+  {task.subject}
+</h3>
 
       <p>⏱ Duration: {task.duration}</p>
 
-      <p>🔥 Priority: {task.priority}</p>
+      <p style={{ color: getPriorityColor(task.priority) }}>
+  🔥 Priority: {task.priority}
+</p>
 
       <p>📝 Notes: {task.notes}</p>
 
