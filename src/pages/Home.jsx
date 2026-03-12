@@ -13,9 +13,6 @@ function Home () {
             <Link to="/login">
                 <button className='mt-4 text-sm text-gray-600 hover:text-gray-800'>Go to Login</button>
             </Link>
-            <Link to="/Home">
-                <button className='mt-4 text-sm text-gray-600 hover:text-gray-800'>Go to Home</button>
-            </Link>
         </div>
     );
 }
