@@ -1,12 +1,21 @@
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 
 function Planner() {
 
-  const [subject, setSubject] = useState("");
-  const [duration, setDuration] = useState("");
-  const [priority, setPriority] = useState("");
-  const [notes, setNotes] = useState("");
-  const [date, setDate] = useState("");
+  const [form, setForm] = useState({
+  subject: "",
+  duration: "",
+  priority: "",
+  notes: "",
+  date: ""
+});
+
+const handleChange = (e) => {
+  setForm({
+    ...form,
+    [e.target.name]: e.target.value
+  });
+};
 
   const [tasks, setTasks] = useState([]);
 
@@ -27,22 +36,18 @@ useEffect(() => {
 
   const addTask = () => {
 
-    const newTask = {
-      subject,
-      duration,
-      priority,
-      notes,
-      date,
-     
-    };
+    const newTask = { ...form};
+      
 
     setTasks([...tasks, newTask]);
 
-    setSubject("");
-    setDuration("");
-    setPriority("");
-    setNotes("");
-    setDate("");
+    setForm({
+      subject: "",
+      duration: "",
+      priority: "",
+      notes: "",
+      date: ""
+    });
     
   };
 
@@ -52,55 +57,81 @@ useEffect(() => {
   };
 
   return (
-    <div>
+    <div style={{ padding: "20px", maxWidth: "600px", margin: "auto" }}>
 
       <h1>Study Planner</h1>
 
       <input
         type="text"
         placeholder="Subject"
-        value={subject}
-        onChange={(e) => setSubject(e.target.value)}
+        name="subject"
+        value={form.subject}
+        onChange={handleChange}
+       
       />
 
       <input
         type="text"
         placeholder="Duration"
-        value={duration}
-        onChange={(e) => setDuration(e.target.value)}
+        name="duration"
+        value={form.duration}
+        onChange={handleChange}
+       
+
       />
 
       <input
         type="text"
         placeholder="Priority"
-        value={priority}
-        onChange={(e) => setPriority(e.target.value)}
-      />
+        name="priority"
+        value={form.priority}
+        onChange={handleChange}
+    />
 
       
       <input
         type="text"
         placeholder="Notes"
-        value={notes}
-        onChange={(e) => setNotes(e.target.value)}
+        name="notes"
+        value={form.notes}
+        onChange={handleChange}
       />
 
       <input
         type="date"
-        value={date}
-        onChange={(e) => setDate(e.target.value)}
+        name="date"
+        value={form.date}
+        onChange={handleChange}
       />
      
       <button onClick={addTask}>Add Task</button>
 
-      <ul>
-        {tasks.map((task, index) => (
-          <li key={index}>
-            {task.subject} - {task.duration} - {task.priority} - {task.deadline} - {task.notes} - {task.date}
-            <button onClick={() => deleteTask(index)}>❌</button>
-          </li>
-        ))}
-      </ul>
+      <ul style={{ listStyle: "none", padding: 0 }}>
+  {tasks.map((task, index) => (
+    <li
+      key={index}
+      style={{
+        border: "1px solid #ddd",
+        padding: "15px",
+        borderRadius: "10px",
+        marginTop: "10px",
+        background: "#f9f9f9"
+      }}
+    >
+      <h3>{task.subject}</h3>
+
+      <p>⏱ Duration: {task.duration}</p>
+
+      <p>🔥 Priority: {task.priority}</p>
+
+      <p>📝 Notes: {task.notes}</p>
+
+      <p>📅 Date: {task.date}</p>
+
+      <button onClick={() => deleteTask(index)}>Delete</button>
+    </li>
+  ))}
+</ul>
 
     </div>
   );
