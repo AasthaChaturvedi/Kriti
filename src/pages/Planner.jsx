@@ -107,6 +107,15 @@ useEffect(() => {
         name="subject"
         value={form.subject}
         onChange={handleChange}
+        style={{
+          display: "block",
+          padding: "8px",
+          marginBottom: "10px",
+          width: "100%",
+          boxSizing: "border-box",
+          borderRadius: "5px",
+          border: "1px solid #ccc"
+        }}
        
       />
 
@@ -116,6 +125,15 @@ useEffect(() => {
         name="duration"
         value={form.duration}
         onChange={handleChange}
+        style={{
+          display: "block",
+          padding: "8px",
+          marginBottom: "10px",
+          width: "100%",
+          boxSizing: "border-box",
+          borderRadius: "5px",
+          border: "1px solid #ccc"
+        }}
       />
 
       <select 
@@ -136,6 +154,15 @@ useEffect(() => {
         name="notes"
         value={form.notes}
         onChange={handleChange}
+         style={{
+          display: "block",
+          padding: "8px",
+          marginBottom: "10px",
+          width: "100%",
+          boxSizing: "border-box",
+          borderRadius: "5px",
+          border: "1px solid #ccc"
+        }}
       />
 
       <input
@@ -143,9 +170,31 @@ useEffect(() => {
         name="date"
         value={form.date}
         onChange={handleChange}
+        style={{
+          display: "block",
+          padding: "8px",
+          marginBottom: "10px",
+          width: "100%",
+          boxSizing: "border-box",
+          borderRadius: "5px",
+          border: "1px solid #ccc"
+        }}
       />
      
-      <button onClick={addTask}>Add Task</button>
+      <button
+  onClick={addTask}
+  style={{
+    background: "#4CAF50",
+    color: "white",
+    border: "none",
+    padding: "10px",
+    borderRadius: "6px",
+    cursor: "pointer",
+    marginTop: "5px"
+  }}
+>
+  Add Task
+</button>
         <div style={{ marginTop: "20px" }}>
         <button onClick={() => setFilter("all")}>All</button>
         <button onClick={() => setFilter("completed")}>Completed</button>
@@ -177,9 +226,10 @@ useEffect(() => {
       style={{
         border: "1px solid #ddd",
         padding: "15px",
-        borderRadius: "10px",
-        marginTop: "10px",
-        background: "#f9f9f9"
+        borderRadius: "12px",
+        marginTop: "12px",
+        background: "#ffffff",
+        boxShadow: "0 2px 5px rgba(0,0,0,0.1)"
       }}
     >
       <h3 style={{ textDecoration: task.completed ? "line-through" : "none" }}>
@@ -200,8 +250,32 @@ useEffect(() => {
       <p>📝 Notes: {task.notes}</p>
 
       <p>📅 Date: {task.date}</p>
-      <button onClick={() => editTask(index)}>Edit</button>
-      <button onClick={() => deleteTask(index)}>Delete</button>
+      <button
+  onClick={() => editTask(index)}
+  style={{
+    marginRight: "10px",
+    background: "#2196F3",
+    color: "white",
+    border: "none",
+    padding: "6px 10px",
+    borderRadius: "5px"
+  }}
+>
+  Edit
+</button>
+
+<button
+  onClick={() => deleteTask(index)}
+  style={{
+    background: "#f44336",
+    color: "white",
+    border: "none",
+    padding: "6px 10px",
+    borderRadius: "5px"
+  }}
+>
+  Delete
+</button>
     </li>
   ))}
 </ul>
