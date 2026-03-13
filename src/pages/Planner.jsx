@@ -36,11 +36,17 @@ useEffect(() => {
   
 
   const addTask = () => {
+    if (editingIndex !== null) {
 
+    const updatedTasks = tasks.map((task, i) =>
+      index === editingIndex ? { ...form, completed: task.completed } : task
+    );
+    setTasks(updatedTasks);
+    setEditingIndex(null);
+  } else {
     const newTask = { ...form, completed: false };
-      
-
     setTasks([...tasks, newTask]);
+  }
 
     setForm({
       subject: "",
@@ -83,7 +89,13 @@ useEffect(() => {
     const completedTasks = tasks.filter(task => task.completed).length;
     const totalTasks =tasks.length;
     const progress = totalTasks === 0 ? 0 : Math.round((completedTasks / totalTasks) * 100);
-    
+    const [editingIndex, setEditingIndex] = useState(null);
+    const editTask = (index) => {
+      const task = tasks[index];
+      setEditingIndex(index);
+      setForm(task);
+      setEditingIndex(index);
+    };
   return (
     <div style={{ padding: "20px", maxWidth: "600px", margin: "auto" }}>
 
@@ -106,14 +118,17 @@ useEffect(() => {
         onChange={handleChange}
       />
 
-      <input
-        type="text"
-        placeholder="Priority"
+      <select 
         name="priority"
         value={form.priority}
         onChange={handleChange}
-    />
-
+       style={{ display: "block", marginBottom: "10px", width: "100%" }}
+    >
+        <option value="">Select Priority</option>
+        <option value="High">High</option>
+        <option value="Medium">Medium</option>
+        <option value="Low">Low</option>
+      </select>
       
       <input
         type="text"
@@ -185,7 +200,7 @@ useEffect(() => {
       <p>📝 Notes: {task.notes}</p>
 
       <p>📅 Date: {task.date}</p>
-
+      <button onClick={() => editTask(index)}>Edit</button>
       <button onClick={() => deleteTask(index)}>Delete</button>
     </li>
   ))}
