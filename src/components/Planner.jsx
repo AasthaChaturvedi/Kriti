@@ -184,8 +184,8 @@ useEffect(() => {
         }}
       />
      
-      <button
-  onClick={addTask}
+<button
+  onClick={editingIndex !== null ? updateTask : addTask}
   style={{
     background: "#4CAF50",
     color: "white",
@@ -259,7 +259,7 @@ useEffect(() => {
       <p>📝 Notes: {task.notes}</p>
 
       <p>📅 Date: {task.date}</p>
-      <button
+<button
   onClick={() => editTask(index)}
   style={{
     marginRight: "10px",

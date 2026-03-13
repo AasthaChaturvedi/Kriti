@@ -4,7 +4,6 @@ function Navbar () {
         <div>
             <h2>Kriti</h2>
             <Link to="/">Home</Link> |
-            <Link to="/planner">Planner</Link> |
             <Link to="/dashboard">Dashboard</Link> |
             <Link to="/login">Login</Link> |
         </div>
