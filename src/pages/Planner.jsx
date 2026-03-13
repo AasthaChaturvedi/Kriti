@@ -9,7 +9,7 @@ function Planner() {
   notes: "",
   date: ""
 });
-
+const [search, setSearch] = useState("");
 const handleChange = (e) => {
   setForm({
     ...form,
@@ -39,7 +39,7 @@ useEffect(() => {
     if (editingIndex !== null) {
 
     const updatedTasks = tasks.map((task, i) =>
-      index === editingIndex ? { ...form, completed: task.completed } : task
+      i === editingIndex ? { ...form, completed: task.completed } : task
     );
     setTasks(updatedTasks);
     setEditingIndex(null);
@@ -81,25 +81,28 @@ useEffect(() => {
     }
     };
     const filteredTasks = tasks.filter(task => {
+      if (!task.subject.toLowerCase().includes(search.toLowerCase())) return false;
       if (filter === "completed") return task.completed;
       if (filter === "pending") return !task.completed;
       return true;
     });
-    const sortedTasks = [...filteredTasks].sort((a, b) => {new Date(a.date) - new Date(b.date)});
+    const sortedTasks = [...filteredTasks].sort((a, b) => new Date(a.date) - new Date(b.date)
+);
     const completedTasks = tasks.filter(task => task.completed).length;
     const totalTasks =tasks.length;
     const progress = totalTasks === 0 ? 0 : Math.round((completedTasks / totalTasks) * 100);
     const [editingIndex, setEditingIndex] = useState(null);
     const editTask = (index) => {
       const task = tasks[index];
-      setEditingIndex(index);
       setForm(task);
       setEditingIndex(index);
     };
+    
   return (
     <div style={{ padding: "20px", maxWidth: "600px", margin: "auto" }}>
 
       <h1>Study Planner</h1>
+     
 
       <input
         type="text"
@@ -219,6 +222,12 @@ useEffect(() => {
   </div>
   <p>{progress}%</p>
 </div>
+<input
+  type="text"
+  placeholder="Search task..."
+  value={search}
+  onChange={(e) => setSearch(e.target.value)}
+/>
       <ul style={{ listStyle: "none", padding: 0 }}>
   {sortedTasks.map((task, index) => (
     <li
