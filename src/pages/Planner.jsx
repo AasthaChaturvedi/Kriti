@@ -79,7 +79,11 @@ useEffect(() => {
       if (filter === "pending") return !task.completed;
       return true;
     });
-
+    const sortedTasks = [...filteredTasks].sort((a, b) => {new Date(a.date) - new Date(b.date)});
+    const completedTasks = tasks.filter(task => task.completed).length;
+    const totalTasks =tasks.length;
+    const progress = totalTasks === 0 ? 0 : Math.round((completedTasks / totalTasks) * 100);
+    
   return (
     <div style={{ padding: "20px", maxWidth: "600px", margin: "auto" }}>
 
@@ -132,9 +136,27 @@ useEffect(() => {
         <button onClick={() => setFilter("completed")}>Completed</button>
         <button onClick={() => setFilter("pending")}>Pending</button>
       </div>
-
+<div style={{ marginTop: "20px" }}>
+  <h2>Progress: {progress}%</h2>
+  <p>{completedTasks}/{totalTasks} tasks completed</p>
+  <div style={{ 
+     background: "#ddd",
+     borderRadius: "10px", 
+     overflow: "hidden", 
+     height: "10px",
+     }}>
+    <div
+      style={{
+        width: `${progress}%`,
+        background: "#4caf50",
+        height: "20px"
+      }}
+    ></div>
+  </div>
+  <p>{progress}%</p>
+</div>
       <ul style={{ listStyle: "none", padding: 0 }}>
-  {filteredTasks.map((task, index) => (
+  {sortedTasks.map((task, index) => (
     <li
       key={index}
       style={{
