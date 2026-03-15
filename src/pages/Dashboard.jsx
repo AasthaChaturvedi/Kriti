@@ -1,20 +1,20 @@
-import Sidebar from "../components/sidebar";
+import Sidebar from "../components/Sidebar";
 import Planner from "../components/Planner";
 
 function Dashboard() {
+
   return (
+
     <div style={{ display: "flex" }}>
 
       <Sidebar />
 
-      <div style={{ padding: "30px", width: "100%" }}>
-        <h1>Dashboard</h1>
-
+      <div style={{ flex: 1, padding: "20px" }}>
         <Planner />
-
       </div>
 
     </div>
+
   );
 }
 
