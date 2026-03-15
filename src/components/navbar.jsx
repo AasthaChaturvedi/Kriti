@@ -1,18 +1,51 @@
-import { Link } from "react-router-dom";
+
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 function Navbar() {
+
+  const navigate = useNavigate();
+
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    localStorage.getItem("loggedIn")
+  );
+
+  useEffect(() => {
+    setIsLoggedIn(localStorage.getItem("loggedIn"));
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("loggedIn");
+    setIsLoggedIn(null);
+    navigate("/login");
+  };
+
   return (
+
     <nav style={navStyle}>
 
-      {/* Logo */}
       <h2 style={logoStyle}>Kriti ✨</h2>
 
-      {/* Navigation */}
       <div style={linksContainer}>
 
         <Link style={linkStyle} to="/">Home</Link>
-        <Link style={linkStyle} to="/dashboard">Planner</Link>
-        <Link style={loginButton} to="/login">Login</Link>
+
+        {isLoggedIn && (
+          <Link style={linkStyle} to="/dashboard">Planner</Link>
+        )}
+
+        {!isLoggedIn && (
+          <>
+            <Link style={linkStyle} to="/login">Login</Link>
+            <Link style={linkStyle} to="/signup">Signup</Link>
+          </>
+        )}
+
+        {isLoggedIn && (
+          <button onClick={handleLogout} style={logoutButton}>
+            Logout
+          </button>
+        )}
 
       </div>
 
@@ -21,48 +54,40 @@ function Navbar() {
 }
 
 const navStyle = {
-  position: "sticky",
-  top: 0,
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
   padding: "15px 40px",
-  backdropFilter: "blur(10px)",
-  background: "rgba(255,255,255,0.7)",
-  borderBottom: "1px solid rgba(0,0,0,0.05)",
-  zIndex: 100
+  background: "linear-gradient(135deg,#a18cd1,#fbc2eb)",
+  color: "white"
 };
 
 const logoStyle = {
-  fontSize: "24px",
   fontWeight: "bold",
-  background: "linear-gradient(90deg,#7F5AF0,#FF6FD8)",
-  WebkitBackgroundClip: "text",
-  WebkitTextFillColor: "transparent",
-  letterSpacing: "1px"
+  fontSize: "22px"
 };
 
 const linksContainer = {
   display: "flex",
   alignItems: "center",
-  gap: "20px"
+  gap: "15px"
 };
 
 const linkStyle = {
   textDecoration: "none",
-  fontWeight: "500",
-  color: "#333",
-  transition: "0.3s"
+  color: "white",
+  fontWeight: "500"
 };
 
-const loginButton = {
-  textDecoration: "none",
-  background: "linear-gradient(135deg,#7F5AF0,#FF6FD8)",
+const logoutButton = {
+  border: "none",
+  background: "#ff4d6d",
   color: "white",
-  padding: "8px 18px",
+  padding: "7px 15px",
   borderRadius: "20px",
-  fontWeight: "600",
-  boxShadow: "0 4px 15px rgba(0,0,0,0.1)"
+  cursor: "pointer",
+  fontWeight: "bold"
 };
 
 export default Navbar;
+

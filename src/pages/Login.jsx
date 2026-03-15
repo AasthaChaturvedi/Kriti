@@ -7,18 +7,34 @@ function Login() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = () => {
+// Handle login logic
+const handleLogin = () => {
 
-    if (!email || !password) {
-      alert("Please enter email and password");
-      return;
-    }
+  const savedUser = JSON.parse(localStorage.getItem("user"));
 
-    // Fake login for MVP
-    localStorage.setItem("user", email);
+  if (!savedUser) {
+    alert("No user found. Please sign up first.");
+    return;
+  }
+
+  if (!email || !password) {
+    alert("Please enter email and password");
+    return;
+  }
+
+  if (email === savedUser.email && password === savedUser.password) {
+
+    localStorage.setItem("loggedIn", "true");
 
     navigate("/dashboard");
-  };
+
+  } else {
+    alert("Invalid email or password");
+  }
+
+};
+
+
 
   return (
 
@@ -86,6 +102,9 @@ function Login() {
 
         <p style={{ marginTop: "15px", fontSize: "14px" }}>
           Don't have an account? Sign up
+          <a href="/signup" style={{ color: "#7a4fd1", fontWeight: "bold", marginLeft: "5px" }}>
+            here
+          </a>
         </p>
 
       </div>
