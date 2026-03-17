@@ -174,24 +174,30 @@ function Planner() {
           value={form.date}
           onChange={handleChange}
           style={inputStyle}
+          format="dd/MM/yyyy"
         />
 
         <button
-          onClick={addTask}
-          style={{
-            width: "100%",
-            padding: "12px",
-            borderRadius: "12px",
-            border: "none",
-            background: "#7a4fd1",
-            color: "white",
-            fontWeight: "bold",
-            cursor: "pointer",
-            marginTop: "10px"
-          }}
-        >
-          {editingIndex !== null ? "Update Task" : "Add Task"}
-        </button>
+  onClick={addTask}
+  style={{
+    width: "100%",
+    padding: "12px",
+    borderRadius: "12px",
+    border: "none",
+    background: "linear-gradient(135deg, #7C83FD, #B983FF)",
+    color: "white",
+    fontWeight: "bold",
+    cursor: "pointer",
+    marginTop: "10px",
+    transition: "0.2s",
+    boxShadow: "0 5px 15px rgba(124,131,253,0.4)"
+  }}
+  onMouseOver={(e) => e.target.style.transform = "scale(1.05)"}
+  onMouseOut={(e) => e.target.style.transform = "scale(1)"}
+>
+  {editingIndex !== null ? "Update Task" : "Add Task"}
+</button>
+          
 
         <ul style={{ listStyle: "none", padding: 0, marginTop: "20px" }}>
           {tasks.map((task, index) => (
@@ -220,9 +226,39 @@ function Planner() {
               <p>🔥 {task.priority}</p>
               <p>📝 {task.notes}</p>
               <p>📅 {task.date}</p>
-
-              <button onClick={() => editTask(index)}>Edit</button>
-              <button onClick={() => deleteTask(index)}>Delete</button>
+<div style={{ marginTop: "10px" }}>
+              <button
+  onClick={() => editTask(index)}
+  style={{
+    background: "#6c63ff",
+    color: "white",
+    border: "none",
+    padding: "6px 12px",
+    borderRadius: "8px",
+    cursor: "pointer",
+    transition: "0.2s"
+  }}
+>
+  ✏️ Edit
+</button>
+             <button
+  onClick={() => deleteTask(index)}
+  style={{
+    background: "#ff4d4d",
+    color: "white",
+    border: "none",
+    padding: "6px 12px",
+    borderRadius: "8px",
+    cursor: "pointer",
+    marginLeft: "10px",
+    transition: "0.2s"
+  }}
+  onMouseOver={(e) => e.target.style.background = "#e60000"}
+  onMouseOut={(e) => e.target.style.background = "#ff4d4d"}
+>
+  🗑 Delete
+</button>
+</div>
             </li>
           ))}
         </ul>
