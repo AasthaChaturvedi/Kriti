@@ -195,19 +195,55 @@ function Planner() {
 
         
 
-        {/* 📊 GRAPH */}
-<h3 style={{ marginTop: "20px" }}>📊 Your Progress</h3>
+       {/* 📊 CLASSY GRAPH */}
+<div
+  style={{
+    marginTop: "25px",
+    padding: "20px",
+    borderRadius: "20px",
+    background: "linear-gradient(135deg, #f5f7ff, #fdfbff)",
+    boxShadow: "0 10px 25px rgba(0,0,0,0.08)"
+  }}
+>
+  <h3 style={{ marginBottom: "10px" }}>📊 Your Progress</h3>
 
-<div style={{ marginTop: "20px" }}>
   {chartData.length > 0 ? (
-    <LineChart width={350} height={250} data={chartData}>
-      <XAxis dataKey="date" />
-      <YAxis />
-      <Tooltip />
-      <Line type="monotone" dataKey="tasks" stroke="#7C83FD" strokeWidth={3} />
+    <LineChart width={400} height={250} data={chartData}>
+
+      {/* 🌈 Gradient */}
+      <defs>
+        <linearGradient id="colorLine" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="#7C83FD" />
+          <stop offset="100%" stopColor="#B983FF" />
+        </linearGradient>
+      </defs>
+
+      {/* Axes */}
+      <XAxis dataKey="date" stroke="#888" />
+      <YAxis stroke="#888" />
+
+      {/* Tooltip */}
+      <Tooltip
+        contentStyle={{
+          background: "white",
+          borderRadius: "10px",
+          border: "none",
+          boxShadow: "0 5px 15px rgba(0,0,0,0.1)"
+        }}
+      />
+
+      {/* ✨ Smooth Line */}
+      <Line
+        type="monotone"
+        dataKey="tasks"
+        stroke="url(#colorLine)"
+        strokeWidth={4}
+        dot={{ r: 4 }}
+        activeDot={{ r: 6 }}
+      />
     </LineChart>
   ) : (
-    <p>No data to show yet 📉</p>
+    <p>No data yet 📉</p>
   )}
 </div>
 
